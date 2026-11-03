@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Perpustakaan Digital Sekolah</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#eef2f5;--surface:#fff;--ink:#14202b;--muted:#566574;--brand:#0f4c5c;--brand-ink:#fff;--accent:#e9b23c;--line:#d3dce3;--ok:#1b7a4b;--bad:#b3362b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0d161d;--surface:#162430;--ink:#e8eef3;--muted:#9fb0bd;--brand:#6fc3d6;--brand-ink:#0d161d;--accent:#e9b23c;--line:#2a3b49;--ok:#5fd39b;--bad:#ff8a7d}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0d161d;--surface:#162430;--ink:#e8eef3;--muted:#9fb0bd;--brand:#6fc3d6;--brand-ink:#0d161d;--accent:#e9b23c;--line:#2a3b49;--ok:#5fd39b;--bad:#ff8a7d}
+html{scroll-padding-top:70px}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Bricolage Grotesque","Segoe UI",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;line-height:1.2;margin:0 0 .5em;letter-spacing:-.01em}
+h1{font-size:clamp(1.9rem,5vw,3rem);font-weight:800}h2{font-size:1.4rem}h3{font-size:1.05rem}
+a{color:var(--brand)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--brand);color:var(--brand-ink)}
+.bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 16px;max-width:1040px;margin:0 auto}
+.logo{font-weight:800;font-size:1.05rem;margin-right:auto;color:inherit;text-decoration:none}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav a{color:inherit;text-decoration:none;padding:6px 12px;border-radius:99px;font-weight:600;font-size:.95rem}
+nav a.on,nav a:hover{background:var(--brand-ink);color:var(--brand)}
+button,.btn{font:inherit;cursor:pointer;border:2px solid var(--brand);background:var(--brand);color:var(--brand-ink);padding:9px 18px;border-radius:8px;font-weight:700;text-decoration:none;display:inline-block}
+button.alt,.btn.alt{background:transparent;color:var(--brand)}
+button.sm{padding:4px 12px;font-size:.9rem}
+button.gold{background:var(--accent);border-color:var(--accent);color:#14202b}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--surface);border:2px solid var(--line);border-radius:8px;padding:9px 12px;width:100%}
+label{font-weight:600;display:block;margin:12px 0 4px}
+main{padding:24px 0 56px;min-height:70vh}
+.hero{background:var(--brand);color:var(--brand-ink);padding:40px 0 48px}
+.hero p{max-width:55ch;opacity:.9;margin:0 0 20px}
+.search{display:flex;gap:8px;max-width:560px}
+.search input{border-color:transparent}
+.search button{background:var(--accent);border-color:var(--accent);color:#14202b;white-space:nowrap}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.chip{padding:6px 14px;border-radius:99px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font-weight:600;font-size:.92rem;cursor:pointer}
+.chip.on,.chip:hover{border-color:var(--brand);background:var(--brand);color:var(--brand-ink)}
+.shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:20px;margin:16px 0 32px}
+.card{display:block;text-decoration:none;color:inherit}
+.cover{aspect-ratio:3/4;border-radius:4px 10px 10px 4px;padding:14px 12px 12px 18px;display:flex;flex-direction:column;justify-content:space-between;color:#fff;box-shadow:inset 6px 0 0 rgba(0,0,0,.25),0 3px 10px rgba(0,0,0,.18);overflow:hidden}
+.cover b{font-size:1rem;line-height:1.2;font-weight:800}.cover small{opacity:.85;font-size:.75rem}
+.card h3{margin:8px 0 0;font-size:.95rem}.card span{font-size:.85rem;color:var(--muted)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:20px}
+.detail{display:grid;grid-template-columns:220px 1fr;gap:28px}
+@media(max-width:640px){.detail{grid-template-columns:1fr}.detail .cover{max-width:200px}}
+.meta{color:var(--muted);margin:0 0 10px}
+.stars{color:var(--accent);letter-spacing:2px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+.rev{border-top:1px solid var(--line);padding:12px 0}.rev:first-child{border-top:0}
+.tag{font-size:.78rem;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--accent);color:#14202b}
+.reader{max-width:680px;margin:0 auto}
+.page{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:28px 26px;min-height:360px;font-family:"Source Serif 4",Georgia,serif;line-height:1.85}
+.rtools{display:flex;gap:8px;align-items:center;justify-content:space-between;margin:12px 0;flex-wrap:wrap}
+.prog{height:6px;background:var(--line);border-radius:9px;overflow:hidden}.prog i{display:block;height:100%;background:var(--accent)}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:8px;border-bottom:1px solid var(--line);font-size:.95rem}
+.tw{overflow-x:auto}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:8px;z-index:50}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}@media(max-width:720px){.grid2{grid-template-columns:1fr}}
+footer{border-top:1px solid var(--line);padding:20px 0;color:var(--muted);font-size:.9rem}
+.empty{color:var(--muted);padding:12px 0}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="bar">
+<a class="logo" href="#beranda">📚 Perpustakaan Digital</a>
+<nav id="nav"></nav>
+<button class="alt sm" id="gurubtn" style="color:inherit;border-color:currentColor" aria-pressed="false">Mode guru: mati</button>
+</div></header>
+<main id="app"></main>
+<footer><div class="wrap">Perpustakaan Digital Sekolah untuk murid Kelas X–XII. Layanan 24 jam. Data tersimpan di Google Sheets sekolah bila server terhubung, atau di peramban ini bila belum.</div></footer>
+<div id="toast" class="toast" hidden></div>
+<script>
+var BOOKS=[
+{id:"b1",t:"Dasar Pemrograman Web",a:"Tim Guru RPL",k:"Kejuruan",kl:"X",y:2024,h:96,c:"#0f4c5c",s:"Pengantar HTML, CSS, dan JavaScript untuk membuat halaman web pertamamu, lengkap dengan latihan bertahap.",p:["Halaman web dibangun dari tiga lapisan: HTML untuk struktur, CSS untuk tampilan, dan JavaScript untuk perilaku. Memahami pembagian tugas ini membuat kodemu lebih rapi.","Mulailah dengan kerangka dokumen: sebuah judul, satu paragraf, dan satu gambar. Simpan sebagai index.html lalu buka di peramban.","Latihan: ubah warna latar dan ukuran huruf memakai CSS, lalu tambahkan tombol yang menampilkan pesan saat diklik."]},
+{id:"b2",t:"Matematika Terapan untuk Kejuruan",a:"Dra. Sari Wulandari",k:"Pelajaran",kl:"X",y:2023,h:140,c:"#7a2e4d",s:"Konsep persentase, perbandingan, dan statistik dasar dengan contoh kasus dunia kerja.",p:["Persentase dipakai untuk menghitung diskon, pajak, hingga tingkat kerusakan produk. Rumus dasarnya: bagian dibagi keseluruhan, dikali seratus.","Perbandingan membantu menakar bahan. Jika resep memakai 2 bagian A untuk 3 bagian B, maka 10 liter campuran berisi 4 liter A dan 6 liter B.","Latihan: sebuah bengkel memeriksa 80 unit dan menemukan 6 cacat. Hitung persentase cacatnya."]},
+{id:"b3",t:"Jejak Langkah di Tepi Sungai",a:"Raka Pratama",k:"Fiksi",kl:"XI",y:2022,h:210,c:"#2e5e3a",s:"Novel remaja tentang persahabatan, kehilangan, dan keberanian menjaga lingkungan di sebuah desa.",p:["Fajar belum sepenuhnya naik ketika Laras menyusuri tepi sungai. Air tampak keruh, tidak seperti kemarin.","Ia teringat pesan kakeknya: sungai adalah cermin desa. Jika cermin itu kotor, ada yang salah di hulu.","Pagi itu Laras memutuskan mengajak teman-temannya menelusuri hulu, membawa kamera ponsel dan satu pertanyaan besar."]},
+{id:"b4",t:"Jaringan Komputer Praktis",a:"Ir. Bambang Hartono",k:"Teknologi",kl:"XI",y:2024,h:178,c:"#324a8c",s:"Mengenal topologi, alamat IP, dan pengaturan jaringan lokal skala sekolah.",p:["Jaringan komputer menghubungkan perangkat agar dapat berbagi data. Topologi bintang paling umum dipakai karena mudah dirawat.","Setiap perangkat memiliki alamat IP. Contoh alamat jaringan rumah: 192.168.1.10, dengan 192.168.1.1 sebagai gerbang.","Latihan: gambar denah jaringan lab komputer sekolahmu dan tandai posisi switch serta router."]},
+{id:"b5",t:"Kewirausahaan Muda",a:"Nadia Rahma",k:"Motivasi",kl:"XII",y:2023,h:120,c:"#b5541c",s:"Langkah memulai usaha kecil: menemukan ide, menghitung modal, dan memasarkan lewat media sosial.",p:["Usaha yang baik dimulai dari masalah nyata. Tanyakan pada lingkunganmu: apa yang sulit didapat atau merepotkan?","Hitung modal dengan jujur. Catat biaya bahan, tenaga, dan promosi, lalu tentukan harga yang menutup biaya dan memberi untung.","Latihan: rancang usaha satu halaman berisi produk, calon pembeli, harga, dan cara promosi."]},
+{id:"b6",t:"Ensiklopedia Sains Remaja",a:"Tim Redaksi Sains",k:"Referensi",kl:"X",y:2021,h:320,c:"#5b3f8c",s:"Rujukan ringkas fisika, kimia, dan biologi dengan ilustrasi dan istilah penting.",p:["Energi tidak dapat diciptakan atau dimusnahkan, hanya berubah bentuk. Prinsip ini disebut hukum kekekalan energi.","Sel adalah unit terkecil makhluk hidup. Sel tumbuhan memiliki dinding sel dan kloroplas, sedangkan sel hewan tidak.","Istilah penting: atom, molekul, ekosistem, fotosintesis, dan reaksi kimia."]},
+{id:"b7",t:"Bahasa Indonesia: Menulis Teks Ilmiah",a:"Dr. Wahyu Setiawan",k:"Pelajaran",kl:"XII",y:2024,h:132,c:"#8a6d12",s:"Panduan menyusun laporan, abstrak, dan daftar pustaka sesuai kaidah ejaan.",p:["Teks ilmiah ditulis objektif, runtut, dan didukung data. Hindari opini tanpa bukti.","Struktur umum: pendahuluan, metode, hasil, pembahasan, dan simpulan. Setiap bagian menjawab satu pertanyaan pembaca.","Latihan: tulis abstrak 100 kata untuk proyek kelasmu dan minta temanmu menilai kejelasannya."]},
+{id:"b8",t:"Desain Grafis dengan Canva",a:"Putri Ayuningtyas",k:"Kejuruan",kl:"XI",y:2024,h:88,c:"#c2386b",s:"Prinsip tata letak, warna, dan huruf untuk membuat poster, infografik, dan sampul.",p:["Desain yang baik punya satu pusat perhatian. Gunakan ukuran dan warna untuk menuntun mata pembaca.","Batasi pilihan: dua jenis huruf dan tiga warna sudah cukup untuk tampilan yang konsisten.","Latihan: buat poster ajakan membaca ukuran A4 dengan satu judul besar dan satu ajakan bertindak."]},
+{id:"b9",t:"Literasi Digital dan Etika Bermedia",a:"Tim Literasi Sekolah",k:"Referensi",kl:"X",y:2024,h:64,c:"#1f6f78",s:"Cara menilai kebenaran informasi, menjaga data pribadi, dan menghormati hak cipta.",p:["Sebelum membagikan kabar, periksa sumbernya, tanggalnya, dan apakah media lain melaporkan hal yang sama.","Jaga data pribadi: jangan bagikan kata sandi, alamat rumah, atau foto kartu identitas.","Hormati hak cipta: cantumkan sumber dan gunakan karya berlisensi terbuka bila memungkinkan."]},
+{id:"b10",t:"Bangkit dari Gagal",a:"Dimas Anggara",k:"Motivasi",kl:"XII",y:2022,h:150,c:"#6b3a2a",s:"Kisah dan strategi menghadapi kegagalan ujian, lomba, dan seleksi dengan sikap bertumbuh.",p:["Gagal adalah data, bukan vonis. Catat apa yang terjadi, apa penyebabnya, dan apa yang akan kamu ubah.","Pecah target besar menjadi langkah kecil mingguan agar kemajuanmu terlihat.","Latihan: tulis tiga hal yang kamu pelajari dari kegagalan terakhirmu."]}];
+var CATS=["Pelajaran","Fiksi","Teknologi","Kejuruan","Referensi","Motivasi"];
+/* ISI DI SINI dengan alamat Web App Apps Script (berakhiran /exec). Kosong = mode lokal. */
+var API_URL="";
+function api(a){if(!API_URL)return Promise.resolve(null);a.user=S.name;a.pin=S.pin||"";return fetch(API_URL,{method:"POST",body:JSON.stringify(a)}).then(function(r){return r.json()}).catch(function(){toast("Tidak terhubung ke server. Coba lagi.");return null})}
+function sync(){if(!API_URL)return Promise.resolve();return api({a:"all"}).then(function(d){if(!d||!d.ok)return;S.revs=d.revs;S.sugg=d.sugg;S.hist=d.hist;S.loans=d.loans;S.guru=!!d.guru;S.mem=d.mem||[];S.all=d.all||[];var t=document.activeElement?document.activeElement.tagName:"";if(!/^#baca/.test(location.hash)&&!/INPUT|TEXTAREA|SELECT/.test(t))route()})}
+function push(a){return api(a).then(sync)}
+var mem={};
+function ld(k,d){try{var v=localStorage.getItem("perpus:"+k);if(v!==null)return JSON.parse(v)}catch(e){}return k in mem?mem[k]:d}
+function sv(k,v){mem[k]=v;try{localStorage.setItem("perpus:"+k,JSON.stringify(v))}catch(e){}}
+var S={hist:ld("hist",[]),loans:ld("loans",[]),revs:ld("revs",null),sugg:ld("sugg",[]),prog:ld("prog",{}),guru:ld("guru",false),name:ld("name",""),q:"",cat:"",kl:"",fs:18,pin:"",mem:[],all:[]};if(API_URL){S.hist=[];S.loans=[];S.sugg=[];S.revs=[];S.guru=false}
+if(!S.revs){S.revs=[
+{id:1,b:"b1",n:"Andi, X RPL 1",r:5,x:"Penjelasannya runtut. Latihan tombol di bab akhir membuat saya paham cara kerja JavaScript.",s:"ok"},
+{id:2,b:"b3",n:"Salsa, XI TKJ",r:4,x:"Ceritanya dekat dengan kehidupan kami dan mengajak peduli sungai di sekitar sekolah.",s:"ok"},
+{id:3,b:"b5",n:"Rizky, XII AKL",r:5,x:"Cocok untuk yang ingin jualan online. Contoh menghitung modalnya mudah ditiru.",s:"ok"}];sv("revs",S.revs)}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function bk(id){return BOOKS.filter(function(b){return b.id===id})[0]}
+function toast(m){var t=document.getElementById("toast");t.textContent=m;t.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(function(){t.hidden=true},2400)}
+function now(){return new Date().toLocaleString("id-ID",{day:"numeric",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"})}
+function avg(id){var r=S.revs.filter(function(x){return x.b===id&&x.s==="ok"});if(!r.length)return null;return{a:r.reduce(function(s,x){return s+x.r},0)/r.length,n:r.length}}
+function stars(n){return "★★★★★".slice(0,Math.round(n))+"☆☆☆☆☆".slice(0,5-Math.round(n))}
+function reads(id){return S.hist.filter(function(h){return h.b===id}).length}
+function cover(b){return '<div class="cover" style="background:'+b.c+'"><small>'+esc(b.k)+' · Kelas '+b.kl+'</small><b>'+esc(b.t)+'</b><small>'+esc(b.a)+'</small></div>'}
+function card(b){return '<a class="card" href="#buku-'+b.id+'">'+cover(b)+'<h3>'+esc(b.t)+'</h3><span>'+esc(b.a)+'</span></a>'}
+function shelf(l){return l.length?'<div class="shelf">'+l.map(card).join("")+'</div>':'<p class="empty">Belum ada buku yang cocok. Coba kata kunci lain atau usulkan buku di menu Panduan.</p>'}
+function revHtml(r,mod){var b=bk(r.b);return '<div class="rev"><div><span class="stars">'+stars(r.r)+'</span> <strong>'+esc(r.n)+'</strong> pada <a href="#buku-'+b.id+'">'+esc(b.t)+'</a>'+(r.s!=="ok"?' <span class="tag">Menunggu</span>':'')+'</div><p style="margin:4px 0">'+esc(r.x)+'</p>'+(mod?'<button class="sm" data-act="ok" data-id="'+r.id+'">Setujui</button> <button class="sm alt" data-act="del" data-id="'+r.id+'">Hapus</button>':'')+'</div>'}
+function matches(){var q=S.q.toLowerCase();return BOOKS.filter(function(b){return(!S.cat||b.k===S.cat)&&(!S.kl||b.kl===S.kl)&&(!q||(b.t+" "+b.a+" "+b.k+" "+b.s).toLowerCase().indexOf(q)>-1)})}
+
+var V={};
+V.beranda=function(){
+var baru=BOOKS.slice().sort(function(a,b){return b.y-a.y}).slice(0,5);
+var pop=BOOKS.slice().sort(function(a,b){return reads(b.id)-reads(a.id)||b.h-a.h}).slice(0,5);
+var rv=S.revs.filter(function(r){return r.s==="ok"}).slice(0,3);
+return '<section class="hero"><div class="wrap"><h1>Baca kapan saja, dari mana saja.</h1><p>Ratusan halaman referensi untuk tugas dan kebiasaan membaca, tersedia di ponsel dan laptopmu.</p><form class="search" id="sf" role="search"><input id="sq" type="search" placeholder="Cari judul, penulis, atau topik" aria-label="Cari buku"><button>Cari buku</button></form></div></section>'+
+'<div class="wrap"><h2 style="margin-top:28px">Jelajahi kategori</h2><div class="chips">'+CATS.map(function(c){return '<button class="chip" data-cat="'+c+'">'+c+'</button>'}).join("")+['X','XI','XII'].map(function(k){return '<button class="chip" data-kl="'+k+'">Kelas '+k+'</button>'}).join("")+'</div>'+
+'<h2>Buku terbaru</h2>'+shelf(baru)+'<h2>Paling banyak dibaca</h2>'+shelf(pop)+'<h2>Resensi pilihan</h2><div class="panel">'+(rv.length?rv.map(function(r){return revHtml(r)}).join(""):'<p class="empty">Belum ada resensi. Jadilah yang pertama menulis.</p>')+'</div></div>'};
+V.katalog=function(){var l=matches();
+return '<div class="wrap"><h1 style="font-size:2rem">Katalog buku</h1><div class="grid2" style="margin-bottom:8px"><div><label for="kq">Cari</label><input id="kq" type="search" value="'+esc(S.q)+'" placeholder="Judul, penulis, atau topik"></div><div class="grid2" style="gap:10px"><div><label for="kc">Kategori</label><select id="kc"><option value="">Semua</option>'+CATS.map(function(c){return '<option'+(S.cat===c?' selected':'')+'>'+c+'</option>'}).join("")+'</select></div><div><label for="kk">Kelas</label><select id="kk"><option value="">Semua</option>'+['X','XI','XII'].map(function(k){return '<option'+(S.kl===k?' selected':'')+'>'+k+'</option>'}).join("")+'</select></div></div></div><p class="meta" id="cnt">'+l.length+' buku ditemukan</p><div id="kl">'+shelf(l)+'</div></div>'};
+V.buku=function(id){var b=bk(id);if(!b)return V.katalog();var a=avg(id),rs=S.revs.filter(function(r){return r.b===id&&(r.s==="ok"||S.guru)}),pj=S.loans.filter(function(x){return x.b===id&&!x.back}).length;
+var sim=BOOKS.filter(function(x){return x.id!==id&&(x.k===b.k||x.kl===b.kl)}).slice(0,4);
+return '<div class="wrap"><p><a href="#katalog">← Kembali ke katalog</a></p><div class="panel detail"><div>'+cover(b)+'</div><div><h1 style="font-size:2rem">'+esc(b.t)+'</h1><p class="meta">'+esc(b.a)+' · '+b.y+' · '+b.h+' halaman<br>'+b.k+' · Kelas '+b.kl+'</p><p>'+(a?'<span class="stars">'+stars(a.a)+'</span> '+a.a.toFixed(1).replace(".",",")+' dari '+a.n+' ulasan':'Belum ada ulasan')+'</p><p>'+esc(b.s)+'</p><div class="actions"><a class="btn" href="#baca-'+id+'">Baca sekarang</a><button class="alt" data-act="loan" data-id="'+id+'">'+(pj?'Sudah dipinjam':'Pinjam 7 hari')+'</button></div></div></div>'+
+'<div class="grid2"><div class="panel"><h2>Tulis resensi</h2><form id="rf" data-id="'+id+'"><label for="rn">Nama dan kelas</label><input id="rn" required value="'+esc(S.name)+'" placeholder="Contoh: Dewi, X TKJ 2"><label for="rr">Nilai</label><select id="rr"><option value="5">5 – Sangat bagus</option><option value="4">4 – Bagus</option><option value="3">3 – Cukup</option><option value="2">2 – Kurang</option><option value="1">1 – Buruk</option></select><label for="rx">Resensi (3–5 kalimat)</label><textarea id="rx" rows="4" required minlength="30" placeholder="Apa isi buku, apa yang kamu pelajari, dan siapa yang cocok membacanya?"></textarea><p style="margin:12px 0 0"><button>Kirim resensi</button></p></form></div><div class="panel"><h2>Ulasan murid</h2>'+(rs.length?rs.map(function(r){return revHtml(r)}).join(""):'<p class="empty">Belum ada ulasan yang disetujui guru.</p>')+'</div></div>'+
+'<h2>Buku serupa</h2>'+shelf(sim)+'</div>'};
+V.baca=function(id){var b=bk(id);if(!b)return V.katalog();var pg=Math.min(S.prog[id]||0,b.p.length-1);S.pg=pg;S.cur=b;
+return '<div class="wrap"><p><a href="#buku-'+id+'">← Detail buku</a></p><div class="reader"><h2>'+esc(b.t)+'</h2><div class="prog" aria-hidden="true"><i id="pb"></i></div><div class="rtools"><span id="pl"></span><span><button class="alt sm" data-act="fs" data-d="-2" aria-label="Perkecil huruf">A−</button> <button class="alt sm" data-act="fs" data-d="2" aria-label="Perbesar huruf">A+</button></span></div><div class="page" id="pt" aria-live="polite"></div><div class="rtools"><button class="alt" data-act="pv">← Sebelumnya</button><button data-act="nx">Berikutnya →</button></div><p class="meta">Contoh isi untuk demo. Pada versi sekolahmu, bagian ini menampilkan berkas buku dari Google Drive.</p></div></div>'};
+V.riwayat=function(){var h=S.hist.slice().reverse();
+return '<div class="wrap"><h1 style="font-size:2rem">Riwayat saya</h1><div class="panel"><h2>Peminjaman</h2>'+(S.loans.length?'<div class="tw"><table><tr><th>Buku</th><th>Dipinjam</th><th>Batas</th><th>Status</th></tr>'+S.loans.slice().reverse().map(function(l){var b=bk(l.b);return '<tr><td><a href="#buku-'+b.id+'">'+esc(b.t)+'</a></td><td>'+l.d+'</td><td>'+l.due+'</td><td>'+(l.back?'Dikembalikan':'<button class="sm alt" data-act="ret" data-id="'+l.id+'">Kembalikan</button>')+'</td></tr>'}).join("")+'</table></div>':'<p class="empty">Belum ada peminjaman. Buka detail buku lalu pilih Pinjam 7 hari.</p>')+'</div><div class="panel"><h2>Buku yang dibaca</h2>'+(h.length?'<div class="tw"><table><tr><th>Buku</th><th>Waktu baca</th><th>Halaman terakhir</th></tr>'+h.map(function(x){var b=bk(x.b);return '<tr><td><a href="#baca-'+b.id+'">'+esc(b.t)+'</a></td><td>'+x.d+'</td><td>'+((S.prog[b.id]||0)+1)+' dari '+b.p.length+'</td></tr>'}).join("")+'</table></div>':'<p class="empty">Belum ada riwayat bacaan. Mulai dari katalog.</p>')+'</div><button class="alt sm" data-act="clr">Hapus riwayat bacaan</button> '+(API_URL?'<button class="alt sm" data-act="out">Keluar ('+esc(S.name)+')</button>':'')+'</div>'};
+V.resensi=function(){var ok=S.revs.filter(function(r){return r.s==="ok"}).reverse(),pn=S.revs.filter(function(r){return r.s!=="ok"});
+return '<div class="wrap"><h1 style="font-size:2rem">Ruang resensi</h1>'+(S.guru?'<div class="panel"><h2>Moderasi guru ('+pn.length+' menunggu)</h2>'+(pn.length?pn.map(function(r){return revHtml(r,true)}).join(""):'<p class="empty">Tidak ada resensi yang menunggu persetujuan.</p>')+'</div>':'')+'<div class="panel"><h2>Resensi terbaru</h2>'+(ok.length?ok.map(function(r){return revHtml(r)}).join(""):'<p class="empty">Belum ada resensi. Pilih buku lalu tulis resensimu.</p>')+'</div></div>'};
+V.panduan=function(){
+return '<div class="wrap"><h1 style="font-size:2rem">Panduan</h1><div class="grid2"><div class="panel"><h2>Untuk murid</h2><ol><li>Buka beranda, cari buku lewat kolom pencarian atau kategori.</li><li>Klik sampul untuk melihat detail, lalu pilih Baca sekarang.</li><li>Gunakan tombol Sebelumnya dan Berikutnya. Halaman terakhir tersimpan otomatis.</li><li>Pantau bacaan dan peminjamanmu di menu Riwayat saya.</li><li>Tulis resensi 3–5 kalimat. Resensi tampil setelah disetujui guru.</li></ol><p><strong>Etika:</strong> jangan membagikan ulang berkas buku, gunakan bahasa sopan, dan jaga akunmu.</p></div><div class="panel"><h2>Untuk guru</h2><ol><li>Aktifkan Mode guru di pojok kanan atas.</li><li>Buka Ruang resensi untuk menyetujui atau menghapus resensi.</li><li>Lihat usulan buku di bawah ini dan tindak lanjuti.</li><li>Tugaskan murid membaca satu buku dan menulis resensi.</li></ol><p><strong>Hak cipta:</strong> utamakan Buku Sekolah Elektronik, lisensi terbuka, atau buku yang diizinkan penerbit.</p></div></div><div class="panel"><h2>Usul buku</h2><form id="uf" class="grid2" style="gap:12px"><div><label for="ut">Judul buku</label><input id="ut" required></div><div><label for="ua">Alasan</label><input id="ua" required placeholder="Untuk mapel atau minat apa?"></div><div><button>Kirim usulan</button></div></form>'+(S.guru?'<h3 style="margin-top:20px">Daftar usulan ('+S.sugg.length+')</h3>'+(S.sugg.length?'<ul>'+S.sugg.map(function(u){return '<li><strong>'+esc(u.t)+'</strong>: '+esc(u.a)+' ('+u.d+')</li>'}).join("")+'</ul>':'<p class="empty">Belum ada usulan.</p>'):'')+'</div></div>'};
+
+V.masuk=function(){return '<div class="wrap"><div class="panel" style="max-width:460px;margin:20px auto"><h1 style="font-size:1.8rem">Masuk</h1><p class="meta">Tulis nama dan kelasmu agar riwayat bacaan dan peminjamanmu tersimpan.</p><form id="lf"><label for="ln">Nama lengkap</label><input id="ln" required><label for="lk">Kelas</label><input id="lk" required placeholder="Contoh: X TKJ 2"><p style="margin:14px 0 0"><button>Masuk</button></p></form></div></div>'};
+function lab(m){return m.n+", "+(m.p==="Guru"?"Guru":m.k)}
+function gate(){if(!S.guru)return '<div class="wrap"><p class="empty">Menu ini khusus guru. Aktifkan Mode guru di pojok kanan atas.</p></div>';if(!API_URL)return '<div class="wrap"><p class="empty">Menu ini memerlukan koneksi Google Sheets. Isi API_URL di index.html lebih dulu.</p></div>';return ""}
+V.anggota=function(){var g=gate();if(g)return g;
+return '<div class="wrap"><h1 style="font-size:2rem">Data anggota</h1><div class="panel"><h2>Tambah anggota</h2><form id="mf" class="grid2" style="gap:12px"><div><label for="mp">Peran</label><select id="mp"><option>Siswa</option><option>Guru</option></select></div><div><label for="mn">Nama lengkap</label><input id="mn" required></div><div><label for="mo">NIS / NIP</label><input id="mo" required></div><div><label for="mk">Kelas (siswa) atau mapel (guru)</label><input id="mk" required placeholder="Contoh: X TKJ 2 atau Matematika"></div><div><button>Simpan anggota</button></div></form></div><div class="panel"><h2>Daftar anggota ('+S.mem.length+')</h2>'+(S.mem.length?'<div class="tw"><table><tr><th>Peran</th><th>Nama</th><th>NIS / NIP</th><th>Kelas / Mapel</th><th></th></tr>'+S.mem.map(function(m){return '<tr><td>'+esc(m.p)+'</td><td>'+esc(m.n)+'</td><td>'+esc(m.no)+'</td><td>'+esc(m.k)+'</td><td><button class="sm alt" data-act="delm" data-id="'+esc(m.id)+'">Hapus</button></td></tr>'}).join("")+'</table></div>':'<p class="empty">Belum ada anggota. Isi formulir di atas untuk menambah siswa atau guru.</p>')+'</div></div>'};
+V.peminjaman=function(){var g=gate();if(g)return g;var aktif=S.all.filter(function(x){return !x.back}).length;
+return '<div class="wrap"><h1 style="font-size:2rem">Peminjaman</h1><div class="panel"><h2>Catat peminjaman</h2>'+(S.mem.length?'<form id="gf" class="grid2" style="gap:12px"><div><label for="gm">Peminjam</label><select id="gm">'+S.mem.map(function(m){return '<option value="'+esc(m.id)+'">'+esc(m.n)+' ('+esc(m.p)+', '+esc(m.k)+')</option>'}).join("")+'</select></div><div><label for="gb">Buku</label><select id="gb">'+BOOKS.map(function(b){return '<option value="'+b.id+'">'+esc(b.t)+'</option>'}).join("")+'</select></div><div><label for="gd">Lama pinjam</label><select id="gd"><option value="7">7 hari</option><option value="14">14 hari</option></select></div><div><button>Catat peminjaman</button></div></form>':'<p class="empty">Tambahkan anggota dulu di menu Anggota.</p>')+'</div><div class="panel"><h2>Semua peminjaman ('+aktif+' masih dipinjam)</h2>'+(S.all.length?'<div class="tw"><table><tr><th>Peminjam</th><th>Buku</th><th>Dipinjam</th><th>Batas</th><th>Status</th></tr>'+S.all.slice().reverse().map(function(l){var b=bk(l.b);return '<tr><td>'+esc(l.u)+'</td><td>'+esc(b?b.t:l.b)+'</td><td>'+esc(l.d)+'</td><td>'+esc(l.due)+'</td><td>'+(l.back?'Dikembalikan':'<button class="sm alt" data-act="gret" data-id="'+esc(l.id)+'">Kembalikan</button>')+'</td></tr>'}).join("")+'</table></div>':'<p class="empty">Belum ada peminjaman tercatat.</p>')+'</div></div>'};
+var NAV=[["beranda","Beranda"],["katalog","Katalog"],["resensi","Resensi"],["riwayat","Riwayat saya"],["panduan","Panduan"],["peminjaman","Peminjaman","g"],["anggota","Anggota","g"]];
+function route(){var h=(location.hash||"#beranda").slice(1),m=h.match(/^(buku|baca)-(.+)$/),v=m?m[1]:h;if(!V[v]){v="beranda"}if(API_URL&&!S.name&&v!=="panduan")v="masuk";
+document.getElementById("app").innerHTML=m&&V[v]?V[v](m[2]):V[v]();
+document.getElementById("nav").innerHTML=NAV.filter(function(n){return !n[2]||S.guru}).map(function(n){var on=n[0]===v||(v==="buku"||v==="baca")&&n[0]==="katalog";return '<a href="#'+n[0]+'"'+(on?' class="on" aria-current="page"':'')+'>'+n[1]+'</a>'}).join("");
+var g=document.getElementById("gurubtn");g.textContent="Mode guru: "+(S.guru?"aktif":"mati");g.setAttribute("aria-pressed",S.guru);
+if(v==="baca"){S.pg=Math.min(S.prog[m[2]]||0,S.cur.p.length-1);S.hist.push({b:m[2],d:now()});S.hist=S.hist.slice(-50);sv("hist",S.hist);push({a:"read",b:m[2],d:now()});showPage()}
+window.scrollTo(0,0)}
+function showPage(){var b=S.cur,e=document.getElementById("pt");if(!e)return;e.style.fontSize=S.fs+"px";e.innerHTML="<p>"+esc(b.p[S.pg])+"</p>";
+document.getElementById("pl").textContent="Halaman "+(S.pg+1)+" dari "+b.p.length;document.getElementById("pb").style.width=((S.pg+1)/b.p.length*100)+"%";S.prog[b.id]=S.pg;sv("prog",S.prog)}
+function addDays(n){var d=new Date();d.setDate(d.getDate()+n);return d.toLocaleDateString("id-ID",{day:"numeric",month:"short",year:"numeric"})}
+document.addEventListener("click",function(ev){var t=ev.target.closest("[data-act],[data-cat],[data-kl]");if(!t)return;
+if(t.dataset.cat!==undefined){S.cat=t.dataset.cat;S.kl="";S.q="";location.hash="#katalog";return}
+if(t.dataset.kl!==undefined){S.kl=t.dataset.kl;S.cat="";S.q="";location.hash="#katalog";return}
+var a=t.dataset.act,id=t.dataset.id;
+if(a==="loan"){if(S.loans.some(function(x){return x.b===id&&!x.back})){toast("Buku ini sudah kamu pinjam");return}S.loans.push({id:Date.now(),b:id,d:addDays(0),due:addDays(7),back:false});sv("loans",S.loans);var L=S.loans[S.loans.length-1];push({a:"loan",id:L.id,b:id,d:L.d,due:L.due});toast("Dipinjam. Batas kembali "+addDays(7));route()}
+if(a==="ret"){S.loans.forEach(function(l){if(String(l.id)===id)l.back=true});sv("loans",S.loans);push({a:"ret",id:id});toast("Buku dikembalikan");route()}
+if(a==="ok"||a==="del"){S.revs=a==="ok"?S.revs.map(function(r){if(String(r.id)===id)r.s="ok";return r}):S.revs.filter(function(r){return String(r.id)!==id});sv("revs",S.revs);push({a:"mod",id:id,op:a});toast(a==="ok"?"Resensi disetujui":"Resensi dihapus");route()}
+if(a==="nx"){if(S.pg<S.cur.p.length-1){S.pg++;showPage()}else{toast("Kamu sudah sampai halaman terakhir")}}
+if(a==="pv"&&S.pg>0){S.pg--;showPage()}
+if(a==="fs"){S.fs=Math.max(14,Math.min(30,S.fs+Number(t.dataset.d)));showPage()}
+if(a==="delm"){if(confirm("Hapus anggota ini?"))push({a:"delm",id:id})}
+if(a==="gret"){push({a:"gret",id:id});toast("Buku ditandai kembali")}
+if(a==="out"){S.name="";sv("name","");S.guru=false;S.pin="";route()}
+if(a==="clr"){S.hist=[];S.prog={};sv("hist",[]);sv("prog",{});push({a:"clr"});toast("Riwayat bacaan dihapus");route()}});
+document.addEventListener("submit",function(ev){ev.preventDefault();var f=ev.target;
+if(f.id==="lf"){S.name=(document.getElementById("ln").value.trim()+", "+document.getElementById("lk").value.trim());sv("name",S.name);toast("Selamat datang");route();sync()}
+if(f.id==="mf"){push({a:"addm",id:Date.now(),p:document.getElementById("mp").value,n:document.getElementById("mn").value.trim(),no:document.getElementById("mo").value.trim(),k:document.getElementById("mk").value.trim()});toast("Anggota disimpan")}
+if(f.id==="gf"){var mid=document.getElementById("gm").value,M=S.mem.filter(function(x){return String(x.id)===mid})[0];if(M){var dd=Number(document.getElementById("gd").value);push({a:"gloan",id:Date.now(),u:lab(M),b:document.getElementById("gb").value,d:addDays(0),due:addDays(dd)});toast("Peminjaman dicatat")}}
+if(f.id==="sf"){S.q=document.getElementById("sq").value.trim();S.cat="";S.kl="";location.hash="#katalog";route()}
+if(f.id==="rf"){var n=document.getElementById("rn").value.trim();S.name=n;sv("name",n);S.revs.push({id:Date.now(),b:f.dataset.id,n:n,r:Number(document.getElementById("rr").value),x:document.getElementById("rx").value.trim(),s:"wait"});sv("revs",S.revs);var R=S.revs[S.revs.length-1];push({a:"rev",id:R.id,b:R.b,n:R.n,r:R.r,x:R.x});toast("Resensi terkirim. Menunggu persetujuan guru");route()}
+if(f.id==="uf"){S.sugg.push({t:document.getElementById("ut").value.trim(),a:document.getElementById("ua").value.trim(),d:now()});sv("sugg",S.sugg);var U=S.sugg[S.sugg.length-1];push({a:"sugg",t:U.t,al:U.a,d:U.d});toast("Usulan terkirim. Terima kasih");route()}});
+document.addEventListener("input",function(ev){var i=ev.target.id;if(i==="kq"||i==="kc"||i==="kk"){S.q=document.getElementById("kq").value;S.cat=document.getElementById("kc").value;S.kl=document.getElementById("kk").value;var l=matches();document.getElementById("kl").innerHTML=shelf(l);document.getElementById("cnt").textContent=l.length+" buku ditemukan"}});
+document.getElementById("gurubtn").addEventListener("click",function(){
+if(S.guru){S.guru=false;S.pin="";sv("guru",false);toast("Mode guru mati");route();if(API_URL)sync();return}
+if(!API_URL){S.guru=true;sv("guru",true);toast("Mode guru aktif");route();return}
+var p=prompt("Masukkan PIN guru");if(!p)return;S.pin=p;api({a:"all"}).then(function(d){if(d&&d.guru){toast("Mode guru aktif");sync()}else{S.pin="";toast("PIN salah")}})});
+window.addEventListener("hashchange",route);route();sync();
+</script>
+</body>
+</html>
