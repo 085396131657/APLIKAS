@@ -87,7 +87,7 @@ var BOOKS=[
 {id:"b10",t:"Bangkit dari Gagal",a:"Dimas Anggara",k:"Motivasi",kl:"XII",y:2022,h:150,c:"#6b3a2a",s:"Kisah dan strategi menghadapi kegagalan ujian, lomba, dan seleksi dengan sikap bertumbuh.",p:["Gagal adalah data, bukan vonis. Catat apa yang terjadi, apa penyebabnya, dan apa yang akan kamu ubah.","Pecah target besar menjadi langkah kecil mingguan agar kemajuanmu terlihat.","Latihan: tulis tiga hal yang kamu pelajari dari kegagalan terakhirmu."]}];
 var CATS=["Pelajaran","Fiksi","Teknologi","Kejuruan","Referensi","Motivasi"];
 /* ISI DI SINI dengan alamat Web App Apps Script (berakhiran /exec). Kosong = mode lokal. */
-var API_URL="";
+var API_URL="https://script.google.com/macros/s/XXXX/exec";
 function api(a){if(!API_URL)return Promise.resolve(null);a.user=S.name;a.pin=S.pin||"";return fetch(API_URL,{method:"POST",body:JSON.stringify(a)}).then(function(r){return r.json()}).catch(function(){toast("Tidak terhubung ke server. Coba lagi.");return null})}
 function sync(){if(!API_URL)return Promise.resolve();return api({a:"all"}).then(function(d){if(!d||!d.ok)return;S.revs=d.revs;S.sugg=d.sugg;S.hist=d.hist;S.loans=d.loans;S.guru=!!d.guru;S.mem=d.mem||[];S.all=d.all||[];var t=document.activeElement?document.activeElement.tagName:"";if(!/^#baca/.test(location.hash)&&!/INPUT|TEXTAREA|SELECT/.test(t))route()})}
 function push(a){return api(a).then(sync)}
